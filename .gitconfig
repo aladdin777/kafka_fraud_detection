@@ -1,0 +1,53 @@
+[user]
+	name = aladdin777
+	email = ognedykh@gmail.com
+	# Если на GitHub включена защита личной почты, укажите адрес вида:
+	# 12345678+username@users.noreply.github.com
+	signingkey = ~/.ssh/aladdin_ya.pub
+
+[init]
+	# Ветка по умолчанию при создании нового репозитория (как на GitHub)
+	defaultBranch = main
+
+[core]
+	editor = code --wait        # Редактор по умолчанию (здесь VS Code; можно заменить на nano или vim)
+	autocrlf = input            # Для Linux/macOS: конвертирует CRLF в LF при коммите. Для Windows ставьте true
+	quotepath = false           # Корректное отображение кириллицы в именах файлов
+	excludesfile = ~/.gitignore_global # Глобальный файл игнорирования (для .DS_Store, .idea и т.д.)
+
+[pull]
+	rebase = true               # Использовать rebase вместо создания лишних merge-коммитов при git pull
+
+[push]
+	autoSetupRemote = true      # Автоматически создавать удаленную ветку при первом git push (без -u origin ...)
+	default = current           # Пушить только текущую ветку
+
+[fetch]
+	prune = true                # Автоматически удалять локальные ссылки на ветки, которые уже удалены на GitHub
+
+[gpg]
+	format = ssh                # Использовать ваш обычный SSH-ключ для подписи коммитов (плашка Verified на GitHub)
+
+[commit]
+	gpgsign = true              # Автоматически подписывать все коммиты (удалите, если не используете подпись)
+
+[url "git@github.com:"]
+	# Автоматически заменять HTTPS-ссылки на SSH при клонировании (удобно, чтобы не вводить токены)
+	insteadOf = https://github.com
+
+[color]
+	ui = auto                   # Цветной вывод в терминале
+
+[alias]
+	# Короткие команды для ускорения работы
+	st = status -sb
+	co = checkout
+	sw = switch
+	br = branch
+	ci = commit
+	cm = commit -m
+	ca = commit --amend --no-edit
+	lg = log --oneline --graph --decorate --all
+	unstage = reset HEAD --
+	last = log -1 HEAD
+
