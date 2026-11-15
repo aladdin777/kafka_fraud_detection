@@ -120,8 +120,9 @@ end
 1. Клонирование репозитория
 
 ```bash
+cd "$HOME"
 git clone https://github.com/aladdin777/kafka_fraud_detection.git 
-cd kafka_fraud_detection
+cd "$HOME/kafka_fraud_detection"
 ```
 
 2. Запуск инфраструктуры
@@ -138,7 +139,7 @@ chmod +x register-connector.sh
 4. Сборка и запуск приложения
 ```bash
 mvn clean package
-java -jar target/fraud-detection-1.0.0.jar
+java -jar target/fraud-detection-1.0.jar
 ```
 
 5. Проверка работоспособности
@@ -148,18 +149,16 @@ curl -X POST http://localhost:8080/transactions \
   -d '{"amount": 150.0, "currency": "USD", "userId": 123}'
 ``` 
 
-
 ### Добавление настроек SSL для Spring Boot приложение:
-
 ```
-Все компоненты приложения уже настроены для работы с SSL
+_Все компоненты приложения уже настроены для работы с SSL_
 ```
 ---
 # Тестирование системы
 ## 1. Генерация тестовых транзакций
+### Ограничения вызывающие статус SUSPICIOUS - не более 2 транзакций за раз и/или сумма транзакции менее 1000
 
 ### Генерируем обычную транзакцию не попадающую под ограничения
-### Ограничения вызывающие статус SUSPICIOUS - не более 2 транзакций за раз и сумма транзакции менее 1000
 ```
 bash
 curl -X POST http://localhost:8080/transactions -H "Content-Type: application/json" -d '{"amount": 150.0, "currency": "USD", "user_id": 1000}'
@@ -243,7 +242,7 @@ curl -X POST http://localhost:8080/transactions -H "Content-Type: application/js
 docker-compose logs kafka | grep "Fraud detected"
  ```
 
-### Подключится напрямую к контейнеру:
+### Подключиться напрямую к контейнеру:
 
 ```bash
 docker exec -it postgres psql -U postgres -d transactions_db
