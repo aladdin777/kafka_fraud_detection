@@ -146,7 +146,7 @@ java -jar target/fraud-detection-1.0.jar
 ```bash
 curl -X POST http://localhost:8080/transactions \
   -H "Content-Type: application/json" \
-  -d '{"amount": 150.0, "currency": "USD", "userId": 123}'
+  -d '{"amount": 150.0, "currency": "USD", "user_id": 123}'
 ``` 
 
 ### Добавление настроек SSL для Spring Boot приложение:
@@ -185,13 +185,15 @@ curl -X POST http://localhost:8080/transactions -H "Content-Type: application/js
 # Просмотр алертов в Kafka
 docker exec -it kafka kafka-console-consumer --bootstrap-server kafka:29092 --topic fraud-alerts --from-beginning --consumer.config /etc/kafka/secrets/client.properties
 ```
+>Ожидаемый результат- список user_id транзакции которых попали под правило SUSPICIOUS
 
 ## 3. Проверка статуса транзакций
-
+### Напрямую через контейнер
 ```
-psql -h localhost -U springuser transactions_db
-пароль- springpass
-# SQL
+docker exec -it postgres psql -U springuser -d transactions_db -c "SELECT * FROM transaction;"
+```
+### Или через SQL в самой БД
+```
 SELECT user_id, status, COUNT(*) 
 FROM transaction 
 GROUP BY user_id, status;
@@ -200,11 +202,11 @@ GROUP BY user_id, status;
 ## Мониторинг и отладка
 ### Доступные интерфейсы:
 - Debezium Connect: http://localhost:8083/connectors
-- PostgreSQL: psql -h localhost -U springuser transactions_db
+- PostgreSQL: docker exec -it postgres psql -U springuser -d transactions_db
 
 ---
 
-## Удаление контейнеров
+### Удаление контейнеров
 ```bash
 docker-compose down -v --remove-orphans
 ```
@@ -215,25 +217,11 @@ docker-compose down -v --remove-orphans
 docker-compose down -v --remove-orphans
 docker system prune -a -f
 docker-compose up -d
-````
+```
 
 ---
-## Тестирование работы:
-
- - Отправка тестовых транзакций
- ```bash
-curl -X POST http://localhost:8080/transactions -H "Content-Type: application/json" -d '{
-"amount": 1500.00,
-"currency": "USD",
-"userId": 12345
-}'
-
 # Проверка логов Kafka Streams
+```
 docker-compose logs kafka | grep "Fraud detected"
- ```
-### Подключиться напрямую к контейнеру:
-
-```bash
-docker exec -it postgres psql -U springuser -d transactions_db
 ```
 ---
