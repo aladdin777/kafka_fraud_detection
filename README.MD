@@ -220,7 +220,7 @@ docker-compose up -d
 ```
 
 ---
-# Проверка логов Kafka Streams
+### Проверка логов Kafka Streams
 ```
 docker-compose logs kafka | grep "Fraud detected"
 ```
