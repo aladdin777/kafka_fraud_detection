@@ -155,6 +155,7 @@ curl -X POST http://localhost:8080/transactions \
 Все компоненты приложения уже настроены для работы с SSL
 ```
 ---
+```
 # Тестирование системы
 # 1. Генерация тестовых транзакций
 
@@ -163,7 +164,7 @@ curl -X POST http://localhost:8080/transactions \
 curl -X POST http://localhost:8080/transactions -H "Content-Type: application/json" -d '{"amount": 150.0, "currency": "USD", "user_id": 1000}'
 Ожидаемый результат- в БД появится запись вида
 id операции | сумма (150) | тип валюты (USD) | статус операции (NEW)| время и дата операции | id пользователя (1000)
-
+```
 ```
 # Генерируем 3 транзакции попадающие под ограничение >=3
 for i in {1..3}; do curl -X POST http://localhost:8080/transactions -H "Content-Type: application/json" -d "{\"amount\": $((400 * $i)), \"currency\": \"USD\", \"user_id\": 1001}" | sleep 20; done
