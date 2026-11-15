@@ -158,8 +158,7 @@ curl -X POST http://localhost:8080/transactions \
 ### Ограничения вызывающие статус SUSPICIOUS - не более 2 транзакций за раз и/или сумма транзакции более 1000 УЕ
 
 ### Генерируем обычную транзакцию не попадающую под ограничения
-```
-bash
+```bash
 curl -X POST http://localhost:8080/transactions -H "Content-Type: application/json" -d '{"amount": 150.0, "currency": "USD", "user_id": 1000}'
 ```
 >Ожидаемый результат- в БД появится запись вида <br>
@@ -172,7 +171,7 @@ for i in {1..3}; do curl -X POST http://localhost:8080/transactions -H "Content-
 >Ожидаемый результат- транзакция попадает под правило count >= 3 и помечается в БД как "Подозрительная" (SUSPICIOUS)
 
 ### Генерируем транзакцию попадающую под ограничение "менее 1000"
-```
+```bash
 curl -X POST http://localhost:8080/transactions -H "Content-Type: application/json" -d '{"amount": 1500.0, "currency": "USD", "user_id": 1002}'
 ```
 >Ожидаемый результат- транзакция попадает под правило amount < 1000 <br>
@@ -181,15 +180,15 @@ curl -X POST http://localhost:8080/transactions -H "Content-Type: application/js
 
 ## 2. Мониторинг алертов
 
+### Просмотр алертов в Kafka
 ```bash
-# Просмотр алертов в Kafka
 docker exec -it kafka kafka-console-consumer --bootstrap-server kafka:29092 --topic fraud-alerts --from-beginning --consumer.config /etc/kafka/secrets/client.properties
 ```
 >Ожидаемый результат- список user_id транзакции которых попали под правило SUSPICIOUS
 
 ## 3. Проверка статуса транзакций
 ### Напрямую через контейнер
-```
+```bash
 docker exec -it postgres psql -U springuser -d transactions_db -c "SELECT * FROM transaction;"
 ```
 ### Или через SQL в самой БД
@@ -221,7 +220,7 @@ docker-compose up -d
 
 ---
 ### Проверка логов Kafka Streams
-```
+```bash
 docker-compose logs kafka | grep "Fraud detected"
 ```
 ---
