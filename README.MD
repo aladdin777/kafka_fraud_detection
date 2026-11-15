@@ -150,7 +150,7 @@ curl -X POST http://localhost:8080/transactions \
 ``` 
 
 ### Добавление настроек SSL для Spring Boot приложение:
-__Все компоненты приложения уже настроены для работы с SSL__
+Все компоненты приложения уже настроены для работы с SSL
 ---
 # Тестирование системы
 ## 1. Генерация тестовых транзакций
@@ -202,18 +202,8 @@ GROUP BY user_id, status;
 
 ---
 
-### Запуск приложения
-
+## Удаление контейнеров
 ```bash
-# Запуск контейнеров
-docker-compose up -d
-
-# Запускаем скрипт в bash 
-./register-connector.sh
-
-# Далее запускаем Spring Boot приложение в классе FraudDetectionApplication
-
-# Удаление контейнеров
 docker-compose down -v --remove-orphans
 ```
 
@@ -239,10 +229,9 @@ curl -X POST http://localhost:8080/transactions -H "Content-Type: application/js
 # Проверка логов Kafka Streams
 docker-compose logs kafka | grep "Fraud detected"
  ```
-
 ### Подключиться напрямую к контейнеру:
 
 ```bash
-docker exec -it postgres psql -U postgres -d transactions_db
+docker exec -it postgres psql -U springuser -d transactions_db
 ```
 ---
