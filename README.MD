@@ -167,19 +167,18 @@ curl -X POST http://localhost:8080/transactions -H "Content-Type: application/js
 
 ### Генерируем 3 транзакции попадающие под ограничение >=3
 ```bash
-for i in {1..3}; do curl -X POST http://localhost:8080/transactions -H "Content-Type: application/json" -d "{\"amount\": $((100 * $i)), \"currency\": \"USD\", \"user_id\": 1001}" | sleep 20; done
+for i in {1..3}; do curl -X POST http://localhost:8080/transactions -H "Content-Type: application/json" -d "{\"amount\": $((100 * $i)), \"currency\": \"USD\", \"user_id\": 1001}" | sleep 5; done
 ```
-```
-Ожидаемый результат- транзакция попадает под правило count >= 3 и помечается в БД как "Подозрительная" (SUSPICIOUS)
-```
+>Ожидаемый результат- транзакция попадает под правило count >= 3 и помечается в БД как "Подозрительная" (SUSPICIOUS)
+
 ### Генерируем транзакцию попадающую под ограничение "менее 1000"
 ```
 curl -X POST http://localhost:8080/transactions -H "Content-Type: application/json" -d '{"amount": 1500.0, "currency": "USD", "user_id": 1002}'
-Ожидаемый результат- транзакция попадает под правило amount < 1000
-в БД появится запись вида
-id операции | сумма (1500) | тип валюты (USD) | статус операции (SUSPICIOUS)| время и дата операции | id пользователя (1002)
-
 ```
+>Ожидаемый результат- транзакция попадает под правило amount < 1000 <br>
+>в БД появится запись вида <br>
+>id операции | сумма (1500) | тип валюты (USD) | статус операции (SUSPICIOUS)| время и дата операции | id пользователя (1002)
+
 ## 2. Мониторинг алертов
 
 ```bash
