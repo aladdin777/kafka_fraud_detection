@@ -1,13 +1,14 @@
+# Oleg G.
 # Fraud Detection - Real-time Transaction Monitoring
 
 ![Java](https://img.shields.io/badge/Java-17-%23ED8B00?logo=openjdk&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.5.0-%236DB33F?logo=springboot&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.4.0-%236DB33F?logo=springboot&logoColor=white)
 ![Apache Kafka](https://img.shields.io/badge/Apache_Kafka-3.5.1-%23231F20?logo=apachekafka&logoColor=white)
 ![Debezium](https://img.shields.io/badge/Debezium-2.3-%23BF2BBD?logo=debezium&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-13-%23336791?logo=postgresql&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-20.10%2B-%232496ED?logo=docker&logoColor=white)
 ![Kafka Streams](https://img.shields.io/badge/Kafka_Streams-3.5.1-%23000000?logo=apachekafka&logoColor=white)
-![Maven](https://img.shields.io/badge/Maven-3.8%2B-%23C71A36?logo=apachemaven&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-3.6.3%2B-%23C71A36?logo=apachemaven&logoColor=white)
 ![REST API](https://img.shields.io/badge/REST_API-%23563D7C?logo=rest&logoColor=white)
 
 ### Профессиональная система для обнаружения мошеннических транзакций в реальном времени с использованием:
@@ -29,10 +30,9 @@ E -->|Fraud Alert| F[Fraud Processor]
 F -->|Mark Suspicious| B
 ```
 
-
 ---
 
-> ### ⚠️ ВАЖНОЕ ПРИМЕЧАНИЕ ПО БЕЗОПАСНОСТИ
+> ### ВАЖНОЕ ПРИМЕЧАНИЕ ПО БЕЗОПАСНОСТИ
 > **SSL/TLS ВСЕ сертификаты и ключи включены в публичный репозиторий в качестве тестового материала для обучения.  
 ---
 
@@ -46,10 +46,11 @@ fraud-detection/
 │   │   ├── java/com/
 │   │   │   ├── config/           # Конфигурация Kafka
 │   │   │   ├── controller/       # REST контроллеры
-│   │   │   ├── detection/        # Главный класс приложения
+│   │   │   ├── detection/        # Пустая папка
 │   │   │   ├── model/            # Сущности данных
 │   │   │   ├── repository/       # Репозитории Spring Data
-│   │   │   └── service/          # Бизнес-логика и Kafka Streams
+│   │   │   ├── service/          # Бизнес-логика и Kafka Streams
+            └── FraudDetectionApplication.java    Главный класс приложения
 │   │   └── resources/
 │   │       ├── application.properties
 │   │       └── logback-spring.xml
@@ -65,13 +66,13 @@ fraud-detection/
 ## Технологический стек
 
 - Java 17
-- Spring Boot 3.5.0
+- Spring Boot 3.4.0
 - Apache Kafka 3.5.1
 - Kafka Streams
 - Debezium 2.3
 - PostgreSQL 13
 - Docker 20.10+
-- Maven 3.8+
+- Maven 3.6.3+
 
 
 ### Архитектура решения
@@ -139,7 +140,13 @@ chmod +x register-connector.sh
 4. Сборка и запуск приложения
 ```bash
 mvn clean package
+```
+```bash
 java -jar target/fraud-detection-1.0.jar
+```
+> Или скачать напрямую из моего репозитория собранный jar-файл
+```bash
+curl -L -O "https://github.com/aladdin777/kafka_fraud_detection/releases/download/v1.0/fraud-detection-1.0.jar"
 ```
 
 5. Проверка работоспособности
@@ -148,6 +155,9 @@ curl -X POST http://localhost:8080/transactions \
   -H "Content-Type: application/json" \
   -d '{"amount": 150.0, "currency": "USD", "user_id": 123}'
 ``` 
+```
+docker exec -it postgres psql -U springuser -d transactions_db -c "SELECT * FROM transaction;"
+```
 
 ### Добавление настроек SSL для Spring Boot приложение:
 - Все компоненты приложения уже настроены для работы с SSL
