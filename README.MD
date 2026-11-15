@@ -162,7 +162,7 @@ curl -X POST http://localhost:8080/transactions \
 bash
 curl -X POST http://localhost:8080/transactions -H "Content-Type: application/json" -d '{"amount": 150.0, "currency": "USD", "user_id": 1000}'
 ```
->Ожидаемый результат- в БД появится запись вида
+>Ожидаемый результат- в БД появится запись вида \br
 >id операции | сумма (150) | тип валюты (USD) | статус операции (NEW)| время и дата операции | id пользователя (1000)
 
 ### Генерируем 3 транзакции попадающие под ограничение >=3
