@@ -13,12 +13,10 @@ import java.io.File;
 @EnableKafka
 public class SslConfig {
 
-    //@Value("/home/oleg.gnedyx@rtlabs.ru/kafka_fraud/kafka_fraud_detection/ssl/truststore.jks")
-    @Value("${user.home}/kafka_fraud/kafka_fraud_detection/ssl/truststore.jks")
+    @Value("${user.home}/kafka_fraud_detection/ssl/truststore.jks")
     private String truststoreLocation;
 
-    //@Value("/home/oleg.gnedyx@rtlabs.ru/kafka_fraud/kafka_fraud_detection/ssl/kafka.jks")
-    @Value("${user.home}/kafka_fraud/kafka_fraud_detection/ssl/kafka.jks")
+    @Value("${user.home}/kafka_fraud_detection/ssl/kafka.jks")
     private String keystoreLocation;
 
     @PostConstruct

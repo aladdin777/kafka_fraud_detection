@@ -25,7 +25,7 @@ public class FraudBlockerService {
     @Transactional
     public void listenFraudAlerts(String userIdStr) {
         Long userId = Long.parseLong(userIdStr);
-        log.warn("🚨 [FRAUD ALERT] Received alert for userId: {}. Simulating DB lock...", userId);
+        log.warn("[FRAUD ALERT] Received alert for userId: {}. Simulating DB lock...", userId);
 
         // Находим последнюю транзакцию этого пользователя со статусом NEW
         List<Transaction> transactions = transactionRepository.findAll();
